@@ -9,7 +9,7 @@ function sendOTP(req, res) {
     var OTP = Math.floor(1000 + Math.random() * 9000);
     var str = req.body.phone
     phone = "966" + str.substring(str.length - 9)
-    //get user by his phone number 
+    
     const httpRequest = require('https');
     const options = {
         method: 'POST',
@@ -25,6 +25,7 @@ function sendOTP(req, res) {
         "apiKey": "bb8980e24850b7d60961cda4dc914f1d",
         "msg": "Pin Code is:${OTP}"
       }`;
+
     const request = httpRequest.request('https://www.msegat.com/gw/sendsms.php', options, response => {
         console.log('Status', response.statusCode);
         console.log('Headers', response.headers);
@@ -68,6 +69,7 @@ function createOTP(phone, OTP, res) {
                 res.status(201).json({
                     message: "OTP create successfully",
                     OTP: result,
+                    status: true
                 })
             })
         }
@@ -253,5 +255,4 @@ module.exports = {
     signUp: signUp,
     login: login,
     forgotPassword: forgotPassword
-
 }
