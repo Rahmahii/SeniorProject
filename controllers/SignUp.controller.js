@@ -4,61 +4,54 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const tool = require('../tool')
 //////////////////////////////////////////////////////////////////////
+
 function sendOTP(req, res) {
     var OTP = Math.floor(1000 + Math.random() * 9000);
     var str = req.body.phone
     phone = "966" + str.substring(str.length - 9)
     //get user by his phone number 
-    models.User.findOne({ where: { phone } }).then(async result => {
-        if (result) {
-            res.status(409).json({
-                message: "phone already exists! make login",
-            });
-        } else {
-            const httpRequest = require('https');
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            };
+    const httpRequest = require('https');
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    };
 
-            const data = `{
+    const data = `{
         "userName": "Rahmahi",
         "numbers":"${phone}",
         "userSender": "OTP",
         "apiKey": "bb8980e24850b7d60961cda4dc914f1d",
         "msg": "Pin Code is:${OTP}"
       }`;
-            const request = httpRequest.request('https://www.msegat.com/gw/sendsms.php', options, response => {
-                console.log('Status', response.statusCode);
-                console.log('Headers', response.headers);
-                let responseData = '';
+    const request = httpRequest.request('https://www.msegat.com/gw/sendsms.php', options, response => {
+        console.log('Status', response.statusCode);
+        console.log('Headers', response.headers);
+        let responseData = '';
 
-                response.on('data', dataChunk => {
-                    responseData += dataChunk;
-                });
-                response.on('end', () => {
-                    console.log('Response: ', responseData)
-                    if (JSON.parse(responseData).code == 1) {
-                        createOTP(phone, OTP)
-                    } else {
-                        res.status(500).json({
-                            OTP: responseData,
-                        })
-                    }
-                });
-            });
-            request.on('error', error => console.log('ERROR', error));
-            request.write(data);
-            request.end();
-        }
-    }
-
-    )
+        response.on('data', dataChunk => {
+            responseData += dataChunk;
+        });
+        response.on('end', () => {
+            console.log('Response: ', responseData)
+            if (JSON.parse(responseData).code == 1) {
+                createOTP(phone, OTP, res)
+            } else {
+                res.status(500).json({
+                    OTP: responseData,
+                })
+            }
+        });
+    });
+    request.on('error', error => console.log('ERROR', error));
+    request.write(data);
+    request.end();
 }
+
+
 //////////////////////////////////////////////////////////////////////
-function createOTP(phone, OTP) {
+function createOTP(phone, OTP, res) {
     models.otp.findOne({ where: { phone } }).then(async result => {
         //if we sent OTP to the number before 
         if (result) {
@@ -259,6 +252,6 @@ module.exports = {
     verfiyOTP: verfiyOTP,
     signUp: signUp,
     login: login,
-    forgotPassword:forgotPassword
+    forgotPassword: forgotPassword
 
 }

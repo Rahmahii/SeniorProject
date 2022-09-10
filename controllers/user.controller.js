@@ -6,7 +6,25 @@ var jwt = require('jsonwebtoken');
 const tool = require('../tool')
 require("dotenv").config();
 
-
+function getUserByPhone(req, res) {
+    var str = req.body.phone
+    phone = "966" + str.substring(str.length - 9)
+    models.User.findOne({ where: { phone } }).then(async result => {
+        if (result) {
+            res.status(200).json({
+                message: "user already exist! make login",
+                result,
+                status: true
+            });
+        } else {
+            res.status(200).json({
+                message: "User is not exist",
+                result,
+                status: false
+            });
+        }
+    })
+}
 function show(req, res) {
     const id = req.params.id
     models.User.findByPk(id).then(result => {
@@ -67,6 +85,7 @@ function destroy(req, res) {
 }
 
 module.exports = {
+    getUserByPhone:getUserByPhone,
     show: show,
     index: index,
     update: update,
