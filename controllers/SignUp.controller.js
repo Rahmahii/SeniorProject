@@ -6,7 +6,7 @@ const tool = require('../tool')
 //////////////////////////////////////////////////////////////////////
 
 function sendOTP(req, res) {
-    var OTP = Math.floor(1000 + Math.random() * 9000);
+    var OTP = Math.floor(1000 + Math.random() * 9999);
     phone = tool.PhoneFormat(req.body.phone)
     const httpRequest = require('https');
     const options = {
