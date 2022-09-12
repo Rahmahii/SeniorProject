@@ -7,9 +7,7 @@ const tool = require('../tool')
 
 function sendOTP(req, res) {
     var OTP = Math.floor(1000 + Math.random() * 9000);
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
-    
+    phone = tool.PhoneFormat(req.body.phone)
     const httpRequest = require('https');
     const options = {
         method: 'POST',
@@ -74,7 +72,7 @@ function createOTP(phone, OTP, res) {
             })
         }
     }).catch(error => {
-        res.json({
+        res.status(400).json({
             message: "Please send OTP and phone",
             error: error,
             status: false
@@ -84,8 +82,7 @@ function createOTP(phone, OTP, res) {
 //////////////////////////////////////////////////////////////////////without expired date
 function verfiyOTP(req, res) {
     var OTP = req.body.OTP
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
+    phone = tool.PhoneFormat(req.body.phone)
     models.otp.findOne({ where: { phone } }).then(async result => {
         if (result.VerificationCode == OTP) {
             models.otp.update({ isVerified: true }, { where: { phone: phone } }).then(result => {
@@ -96,14 +93,14 @@ function verfiyOTP(req, res) {
                 })
             })
         } else {
-            res.json({
+            res.status(200).json({
                 message: "wrong OTP try again ",
                 result,
                 status: false
             })
         }
     }).catch(error => {
-        res.json({
+        res.status(400).json({
             message: "Please send OTP and phone",
             error: error,
             status: false
@@ -112,8 +109,7 @@ function verfiyOTP(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 function signUp(req, res) {
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
+    phone = tool.PhoneFormat(req.body.phone)
     models.User.findOne({ where: { phone } }).then(async result => {
         if (result) {
             res.json({
@@ -169,8 +165,7 @@ function signUp(req, res) {
 //////////////////////////////////////////////////////////////////////
 function login(req, res) {
     //for make all number in DB with same format 
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
+    phone = tool.PhoneFormat(req.body.phone)
     models.User.findOne({ where: { phone } }).then(user => {
         if (user === null) {
             res.status(401).json({
@@ -194,7 +189,7 @@ function login(req, res) {
                         },
                     });
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         message: "incorrect password",
                     });
                 }
@@ -208,11 +203,10 @@ function login(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 async function forgotPassword(req, res) {
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
+    phone = tool.PhoneFormat(req.body.phone)
     models.User.findOne({ where: { phone } }).then(async user => {
         if (user === null) {
-            res.status(401).json({
+            res.status(200).json({
                 message: "You don't have account ... make Sign-Up",
             });
         } else {
@@ -243,7 +237,7 @@ async function forgotPassword(req, res) {
             })
         }
     }).catch(error => {
-        res.status(500).json({
+        res.status(400).json({
             message: "Something went wrong!",
         });
     });

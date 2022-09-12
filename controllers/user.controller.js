@@ -7,8 +7,7 @@ const tool = require('../tool')
 require("dotenv").config();
 
 function getUserByPhone(req, res) {
-    var str = req.body.phone
-    phone = "966" + str.substring(str.length - 9)
+    phone = tool.PhoneFormat(req.body.phone)
     models.User.findOne({ where: { phone } }).then(async result => {
         if (result) {
             res.status(200).json({
@@ -17,7 +16,7 @@ function getUserByPhone(req, res) {
                 status: true
             });
         } else {
-            res.status(200).json({
+            res.status(400).json({
                 message: "User is not exist",
                 result,
                 status: false
@@ -57,6 +56,7 @@ async function update(req, res) {
         gender: req.body.gender,
     }
     updatedUser.password = await tool.hashing(updatedUser.password)
+    
     models.User.update(updatedUser, { where: { id: id } }).then(result => {
         res.status(201).json({
             message: "user updated successfully",

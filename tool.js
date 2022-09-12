@@ -7,7 +7,10 @@ async function hashing(password) {
     // now we set user password to hashed password
      return await bcrypt.hash(password, salt);
 }
-
+function PhoneFormat (str){
+    return "966" + str.substring(str.length - 9)
+}
 module.exports = {
     hashing: hashing,
+    PhoneFormat:PhoneFormat
 }
