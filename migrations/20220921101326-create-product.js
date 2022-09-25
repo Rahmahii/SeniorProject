@@ -32,9 +32,6 @@ module.exports = {
         allowNull: true,
       },
       currencyId: {
-        type: Sequelize.INTEGER
-      },
-      currencyId: {
         type: Sequelize.INTEGER,  references: { model: 'currencies', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: true,
       },

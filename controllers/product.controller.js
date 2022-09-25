@@ -17,7 +17,7 @@ function getProductsBySore(req, res) {
         }
     })
 }
-
+//////////////////////////////////////////////////////////////////////
 function FindProductById(req, res) {
     const id = req.body.id
     models.product.findByPk(id).then(result => {
@@ -34,11 +34,11 @@ function FindProductById(req, res) {
     })
 }
 
-
+//////////////////////////////////////////////////////////////////////
 function FindProductByBarcode(req, res) {
     const barcodeNum = req.body.barcodeNum
     const storeId = req.body.storeId
- 
+
     models.product.findOne({ where: { barcodeNum, storeId } }).then(result => {
         if (result) {
             res.status(200).json({

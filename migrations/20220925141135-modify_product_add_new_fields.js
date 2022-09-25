@@ -8,6 +8,8 @@ module.exports = {
       SellPrice: 2.5,
       barcodeNum: 6164001011534,
       storeId: 1,
+      categoryId:2,
+      currencyId:1,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -16,6 +18,8 @@ module.exports = {
       SellPrice: 2,
       barcodeNum: 6009510806151,
       storeId: 1,
+      categoryId:1,
+      currencyId:1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -25,6 +29,8 @@ module.exports = {
       SellPrice: 500,
       barcodeNum: 6009188002213,
       storeId: 2,
+      categoryId:3,
+      currencyId:1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -34,6 +40,8 @@ module.exports = {
       SellPrice: 1,
       barcodeNum: 8904106838586,
       storeId: 2,
+      categoryId:3,
+      currencyId:1,
       createdAt: new Date(),
       updatedAt: new Date()
     },
