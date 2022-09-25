@@ -1,7 +1,7 @@
 const { user } = require('../app')
 const models = require('../models')
 const tool = require('../tool')
-
+//////////////////////////////////////////////////////////////////////
 function findNearest(req, res) {
     var lat1 = req.body.Location_Latitude
     var lon1 = req.body.Location_Longitude
@@ -38,7 +38,7 @@ function findNearest(req, res) {
         })
 
 }
-
+//////////////////////////////////////////////////////////////////////
 function distance(lat1, lon1, lat2, lon2) {
     var radlat1 = Math.PI * lat1 / 180
     var radlat2 = Math.PI * lat2 / 180
@@ -54,7 +54,7 @@ function distance(lat1, lon1, lat2, lon2) {
     dist = dist * 1.609344 //to kilometer
     return dist
 }
-
+//////////////////////////////////////////////////////////////////////
 function index(req, res) {
     models.Store.findAll().then(result => {
         res.status(201).json(result)
@@ -65,7 +65,7 @@ function index(req, res) {
         })
     })
 }
-
+//////////////////////////////////////////////////////////////////////
 function create(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
     models.Store.findOne({ where: { phone } }).then(async result => {
@@ -83,7 +83,7 @@ function create(req, res) {
                 Location_Longitude: req.body.Location_Longitude
             }
             //start new user 
-            models.Store.create(store).then(result => {
+            models.store.create(store).then(result => {
                 if (result) {
                     res.status(201).json({
                         message: "store create successfully ",
@@ -99,6 +99,7 @@ function create(req, res) {
         }
     })
 }
+//////////////////////////////////////////////////////////////////////
 module.exports = {
     index, create, findNearest
 }

@@ -6,9 +6,9 @@ var jwt = require('jsonwebtoken');
 const tool = require('../tool')
 require("dotenv").config();
 
-function getUserByPhone(req, res) {
+function getuserByPhone(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
-    models.User.findOne({ where: { phone } }).then(async result => {
+    models.user.findOne({ where: { phone } }).then(async result => {
         if (result) {
             res.status(200).json({
                 message: "user already exist! make login",
@@ -17,7 +17,7 @@ function getUserByPhone(req, res) {
             });
         } else {
             res.status(400).json({
-                message: "User is not exist",
+                message: "user is not exist",
                 result,
                 status: false
             });
@@ -26,7 +26,7 @@ function getUserByPhone(req, res) {
 }
 function show(req, res) {
     const id = req.params.id
-    models.User.findByPk(id).then(result => {
+    models.user.findByPk(id).then(result => {
         res.status(201).json(result)
     }).catch(error => {
         res.status(500).json({
@@ -36,7 +36,7 @@ function show(req, res) {
     })
 }
 function index(req, res) {
-    models.User.findAll().then(result => {
+    models.user.findAll().then(result => {
         res.status(201).json(result)
     }).catch(error => {
         res.status(500).json({
@@ -48,19 +48,19 @@ function index(req, res) {
 
 async function update(req, res) {
     const id = req.params.id
-    const updatedUser = {
+    const updateduser = {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
         phone: req.body.phone,
         gender: req.body.gender,
     }
-    updatedUser.password = await tool.hashing(updatedUser.password)
+    updateduser.password = await tool.hashing(updateduser.password)
     
-    models.User.update(updatedUser, { where: { id: id } }).then(result => {
+    models.user.update(updateduser, { where: { id: id } }).then(result => {
         res.status(201).json({
             message: "user updated successfully",
-            user: updatedUser
+            user: updateduser
         })
     }).catch(error => {
         res.status(400).json({
@@ -72,7 +72,7 @@ async function update(req, res) {
 }
 function destroy(req, res) {
     const id = req.params.id
-    models.User.destroy({ where: { id: id } }).then(result => {
+    models.user.destroy({ where: { id: id } }).then(result => {
         res.status(201).json({
             message: "user " + id + " deleted successfully",
         })
@@ -85,7 +85,7 @@ function destroy(req, res) {
 }
 
 module.exports = {
-    getUserByPhone:getUserByPhone,
+    getuserByPhone:getuserByPhone,
     show: show,
     index: index,
     update: update,

@@ -1,10 +1,7 @@
 'use strict';
-
-const { sequelize } = require("../models");
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -28,17 +25,10 @@ module.exports = {
         unique: true
       },
       gender: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.TINYINT,
         allowNull: true
       },
-      // Location_Latitude: {
-      //   type: Sequelize.DOUBLE,
-      //   allowNull:true
-      // },
-      // Location_Longitude:{
-      //   type: Sequelize.DOUBLE,
-      //  allowNull:true
-      // },
+
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
@@ -50,12 +40,12 @@ module.exports = {
         allowNull: false
       },
       roleId: {
-        type: Sequelize.INTEGER,  references: { model: 'Roles', key: 'id' }, onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER,  references: { model: 'roles', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: true,
 
       },
       storeId: {
-        type: Sequelize.INTEGER,  references: { model: 'Stores', key: 'id' }, onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER,  references: { model: 'stores', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: true,
 
       },
@@ -70,6 +60,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   }
 };

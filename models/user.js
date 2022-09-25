@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class user extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       //this.belongsTo(models.role)
     }
   }
-  User.init({
+  user.init({
 
     name: {
       type: DataTypes.STRING, validate: {
@@ -38,15 +38,23 @@ module.exports = (sequelize, DataTypes) => {
     roleId: {
       type: DataTypes.INTEGER,
       references: {
-        model: Role,
+        model: role,
         key: "roleId"
       }
 
-    }
+    },
+    storeId:  {
+      type: DataTypes.INTEGER,
+      references: {
+        model: store,
+        key: "storeId"
+      }
+
+    },
   },
     {
       sequelize,
-      modelName: 'User',
+      modelName: 'user',
     });
-  return User;
+  return user;
 };

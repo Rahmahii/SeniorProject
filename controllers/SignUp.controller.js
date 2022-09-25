@@ -110,10 +110,10 @@ function verfiyOTP(req, res) {
 //////////////////////////////////////////////////////////////////////
 function signUp(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
-    models.User.findOne({ where: { phone } }).then(async result => {
+    models.user.findOne({ where: { phone } }).then(async result => {
         if (result) {
             res.json({
-                message: "User already exists!",
+                message: "user already exists!",
                 user: result
             });
         } else {
@@ -138,7 +138,7 @@ function signUp(req, res) {
             //hashing the password for securty
             user.password = await tool.hashing(user.password)
             //start new user 
-            models.User.create(user).then(result => {
+            models.user.create(user).then(result => {
                 var token = jwt.sign({
                     phone: user.phone,
                     name: user.name,
@@ -166,7 +166,7 @@ function signUp(req, res) {
 function login(req, res) {
     //for make all number in DB with same format 
     phone = tool.PhoneFormat(req.body.phone)
-    models.User.findOne({ where: { phone } }).then(user => {
+    models.user.findOne({ where: { phone } }).then(user => {
         if (user === null) {
             res.status(401).json({
                 message: "You don't have account ... make Sign-Up",
@@ -204,7 +204,7 @@ function login(req, res) {
 //////////////////////////////////////////////////////////////////////
 async function forgotPassword(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
-    models.User.findOne({ where: { phone } }).then(async user => {
+    models.user.findOne({ where: { phone } }).then(async user => {
         if (user === null) {
             res.status(200).json({
                 message: "You don't have account ... make Sign-Up",
@@ -228,7 +228,7 @@ async function forgotPassword(req, res) {
             }
             //hashing the password for securty
             user.password = await tool.hashing(user.password)
-            models.User.update(user, { where: { phone: phone } }).then(result => {
+            models.user.update(user, { where: { phone: phone } }).then(result => {
                 res.status(201).json({
                     message: "password is ubdated successfully",
                     result,
