@@ -5,7 +5,7 @@ const router=express.Router();
 
 
 router.get("/:id",userController.show)//params
-router.post("/getUserByPhone",userController.getUserByPhone)
+router.post("/getUserByPhone",userController.getuserByPhone)
 router.get("/",userController.index)
 router.put("/:id",userController.update)
 router.delete("/:id",userController.destroy)

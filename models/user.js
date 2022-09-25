@@ -1,7 +1,8 @@
 'use strict';
 const { Model } = require("sequelize")
 //const Validator = require("fastest-validator");
-const Role = require('./role')
+const role = require('./role')
+const store = require('./store')
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
