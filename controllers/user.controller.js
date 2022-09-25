@@ -1,12 +1,8 @@
-const { user } = require('../app')
 const models = require('../models')
-const Validator = require("fastest-validator");
-const bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
 const tool = require('../tool')
 require("dotenv").config();
 
-function getuserByPhone(req, res) {
+function getUserByPhone(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
     models.user.findOne({ where: { phone } }).then(async result => {
         if (result) {
@@ -18,7 +14,6 @@ function getuserByPhone(req, res) {
         } else {
             res.status(400).json({
                 message: "user is not exist",
-                result,
                 status: false
             });
         }
@@ -56,7 +51,7 @@ async function update(req, res) {
         gender: req.body.gender,
     }
     updateduser.password = await tool.hashing(updateduser.password)
-    
+
     models.user.update(updateduser, { where: { id: id } }).then(result => {
         res.status(201).json({
             message: "user updated successfully",
@@ -85,10 +80,10 @@ function destroy(req, res) {
 }
 
 module.exports = {
-    getuserByPhone:getuserByPhone,
-    show: show,
-    index: index,
-    update: update,
-    destroy: destroy
+    getUserByPhone,
+    show,
+    index,
+    update,
+    destroy
 }
 

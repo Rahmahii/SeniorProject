@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         key: "storeId"
       }
     },
-    currencyId:  {
+    currencyId: {
       type: DataTypes.INTEGER,
       references: {
         model: currency,

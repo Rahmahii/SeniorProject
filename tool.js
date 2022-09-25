@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
 
 async function hashing(password) {
     // generate salt to hash password

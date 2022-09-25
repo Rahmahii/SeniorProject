@@ -244,9 +244,9 @@ async function forgotPassword(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 module.exports = {
-    sendOTP: sendOTP,
-    verfiyOTP: verfiyOTP,
-    signUp: signUp,
-    login: login,
-    forgotPassword: forgotPassword
+    sendOTP,
+    verfiyOTP,
+    signUp,
+    login,
+    forgotPassword
 }
