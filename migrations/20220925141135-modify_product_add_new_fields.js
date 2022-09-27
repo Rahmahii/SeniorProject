@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('products', [{
       name: 'Pipsi',
       price: 2.5,
-      SellPrice: 2.5,
+      sellPrice: 2.5,
       barcodeNum: 6164001011534,
       storeId: 1,
       categoryId:2,
@@ -15,7 +15,7 @@ module.exports = {
     }, {
       name: 'Layes',
       price: 2,
-      SellPrice: 2,
+      sellPrice: 2,
       barcodeNum: 6009510806151,
       storeId: 1,
       categoryId:1,
@@ -26,7 +26,7 @@ module.exports = {
     {
       name: 'calculus',
       price: 500,
-      SellPrice: 500,
+      sellPrice: 500,
       barcodeNum: 6009188002213,
       storeId: 2,
       categoryId:3,
@@ -37,7 +37,7 @@ module.exports = {
     {
       name: 'Pen',
       price: 1,
-      SellPrice: 1,
+      sellPrice: 1,
       barcodeNum: 8904106838586,
       storeId: 2,
       categoryId:3,

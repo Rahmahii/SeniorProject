@@ -15,24 +15,39 @@ function getProductsBySore(req, res) {
                 status: false
             });
         }
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            status: false,
+            error: error
+        })
     })
 }
 //////////////////////////////////////////////////////////////////////
 function FindProductById(req, res) {
     const id = req.body.id
     models.product.findByPk(id).then(result => {
-        res.status(200).json({
-            message: "product is exsist",
-            status: true,
-            Product: result,
-        })
+        if (result) {
+            res.status(200).json({
+                message: "product is exsist",
+                status: true,
+                Product: result,
+            });
+        } else {
+            res.status(200).json({
+                message: "product is not exsist",
+                status: false,
+            });
+        }
     }).catch(error => {
         res.status(500).json({
             message: "something went wrong ",
+            status: false,
             error: error
         })
     })
 }
+
 
 //////////////////////////////////////////////////////////////////////
 function FindProductByBarcode(req, res) {
@@ -63,5 +78,6 @@ function FindProductByBarcode(req, res) {
 
 module.exports = {
     getProductsBySore,
-    FindProductByBarcode
+    FindProductByBarcode,
+    FindProductById,
 }

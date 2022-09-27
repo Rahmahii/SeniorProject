@@ -9,15 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
-        allowNull: false,
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        allowNull: false,
       },
       Location_Latitude: {
         type: Sequelize.DOUBLE
@@ -26,7 +28,8 @@ module.exports = {
         type: Sequelize.DOUBLE
       },
       logo: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       createdAt: {
         allowNull: true,

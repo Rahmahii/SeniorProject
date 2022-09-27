@@ -1,20 +1,32 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('roles', {
+    await queryInterface.createTable('payment_cards', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      userId: {
+        type: Sequelize.INTEGER,  references: { model: 'users', key: 'id' }, onUpdate: 'CASCADE',
+        allowNull: false,
+      },
+      cardHolderName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
+      cardNum: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      CVV: {
+        type: Sequelize.INTEGER,
         allowNull: true,
+      },
+      expiresDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -27,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('roles');
+    await queryInterface.dropTable('payment_cards');
   }
 };

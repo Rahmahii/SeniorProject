@@ -9,19 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       price: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
+        allowNull: false,
       },
-      SellPrice: {
-        type: Sequelize.DOUBLE
+      sellPrice: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
       },
       barcodeNum: {
-        type: Sequelize.BIGINT
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       categoryId: {
         type: Sequelize.INTEGER,  references: { model: 'categories', key: 'id' }, onUpdate: 'CASCADE',
@@ -29,11 +34,11 @@ module.exports = {
       },
       storeId: {
         type: Sequelize.INTEGER,  references: { model: 'stores', key: 'id' }, onUpdate: 'CASCADE',
-        allowNull: true,
+        allowNull: false,
       },
       currencyId: {
         type: Sequelize.INTEGER,  references: { model: 'currencies', key: 'id' }, onUpdate: 'CASCADE',
-        allowNull: true,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

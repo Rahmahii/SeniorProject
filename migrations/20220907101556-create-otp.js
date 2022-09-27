@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       Phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       VerificationCode: {
         type: Sequelize.STRING

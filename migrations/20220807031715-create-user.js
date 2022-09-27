@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       email: {
         allowNull: true,
@@ -22,13 +23,13 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        allowNull: false,
       },
       gender: {
         type: Sequelize.TINYINT,
-        allowNull: true
+        allowNull: true,
       },
-
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
@@ -41,7 +42,7 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.INTEGER,  references: { model: 'roles', key: 'id' }, onUpdate: 'CASCADE',
-        allowNull: true,
+        allowNull: false,
 
       },
       storeId: {
