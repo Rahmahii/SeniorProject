@@ -5,11 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon server.js"
+    "start": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
-
   "dependencies": {
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
@@ -22,7 +21,9 @@
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
+    "node-geocoder": "^4.2.0",
     "nodemon": "^2.0.19",
+    "opencage-api-client": "^1.0.0",
     "sequelize": "^6.21.3"
   }
 }

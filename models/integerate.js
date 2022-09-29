@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         key: "gatawayId"
       }
     },
-    accountNum: DataTypes.STRING,validate: {isCreditCard: true,} ,
+    accountNum:{ type:DataTypes.STRING, validate: {isCreditCard: true} },
     accountName: DataTypes.STRING,
     bankName: DataTypes.STRING
   }, {

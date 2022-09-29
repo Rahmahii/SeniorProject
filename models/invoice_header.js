@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   invoice_header.init({
     purchaseDate: DataTypes.DATE,
-    totalPrice: DataTypes.DOUBLE,validate: { min: 1},
+    totalPrice:{ type:DataTypes.DOUBLE,validate: { min: 1}},
     gatawayId: {
       type: DataTypes.INTEGER,
       references: {
@@ -41,10 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     CreditCardHolder: DataTypes.STRING,
-    CreditCardNum: DataTypes.STRING,validate: {isCreditCard: true,} ,
+    CreditCardNum: { type:DataTypes.STRING, validate: {isCreditCard: true} } ,
     CreditBankName: DataTypes.STRING,
     depositCardHolder: DataTypes.STRING,
-    depositCardNum: DataTypes.STRING,validate: {isCreditCard: true,},
+    depositCardNum:{ type:DataTypes.STRING, validate: {isCreditCard: true} },
     depositBankName: DataTypes.STRING
   }, {
     sequelize,

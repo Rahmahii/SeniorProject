@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
         key: "productId"
       }
     },
-    quantity: DataTypes.INTEGER,validate: { min: 1},
-    PurchasingPrice: DataTypes.DOUBLE,validate: { min: 1}
+    quantity: {type:DataTypes.INTEGER,validate: { min: 1}},
+    PurchasingPrice: {type:DataTypes.DOUBLE,validate: { min: 1}}
   }, {
     sequelize,
     modelName: 'invoice_detail',

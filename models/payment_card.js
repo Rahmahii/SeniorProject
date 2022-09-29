@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   payment_card.init({
     userId: DataTypes.INTEGER,
     cardHolderName: DataTypes.STRING,
-    cardNum: DataTypes.STRING,validate: {isCreditCard: true,},
+    cardNum: { type:DataTypes.STRING, validate: {isCreditCard: true} },
     CVV: DataTypes.INTEGER,
-    expiresDate:DataTypes.DATE,validate: {isAfter: new Date()}, 
+    expiresDate:{type:DataTypes.DATE,validate: {isAfter: new Date()}}, 
   }, {
     sequelize,
     modelName: 'payment_card',

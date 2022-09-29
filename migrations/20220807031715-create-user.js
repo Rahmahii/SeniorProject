@@ -15,7 +15,6 @@ module.exports = {
       email: {
         allowNull: true,
         type: Sequelize.STRING,
-        unique: true
       },
       password: {
         allowNull: false,
@@ -23,8 +22,7 @@ module.exports = {
       },
       phone: {
         type: Sequelize.STRING,
-        unique: true,
-        allowNull: false,
+        allowNull: true,
       },
       gender: {
         type: Sequelize.TINYINT,
@@ -41,12 +39,12 @@ module.exports = {
         allowNull: false
       },
       roleId: {
-        type: Sequelize.INTEGER,  references: { model: 'roles', key: 'id' }, onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER, references: { model: 'roles', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: false,
 
       },
       storeId: {
-        type: Sequelize.INTEGER,  references: { model: 'stores', key: 'id' }, onUpdate: 'CASCADE',
+        type: Sequelize.INTEGER, references: { model: 'stores', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: true,
 
       },
@@ -58,6 +56,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+
+    }); await queryInterface.addConstraint('users', {
+      fields: ['email', 'roleId'],
+      type: 'unique',
+      name: 'unique_email'
+    }); await queryInterface.addConstraint('users', {
+      fields: ['phone', 'roleId'],
+      type: 'unique',
+      name: 'unique_phone'
     });
   },
   async down(queryInterface, Sequelize) {

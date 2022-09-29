@@ -142,7 +142,8 @@ function signUp(req, res) {
                 var token = jwt.sign({
                     phone: user.phone,
                     name: user.name,
-                    Id: user.id
+                    Id: user.id,
+                    roleId:user.roleId
                 }, process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRES_IN,
                 })
@@ -177,7 +178,8 @@ function login(req, res) {
                     const token = jwt.sign({
                         phone: user.phone,
                         name: user.name,
-                        Id: user.id
+                        Id: user.id,
+                        roleId:user.roleId
                     }, process.env.JWT_SECRET, {
                         expiresIn: process.env.JWT_EXPIRES_IN,
                     });

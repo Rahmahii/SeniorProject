@@ -25,14 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     email: {
-      type: DataTypes.STRING, unique: true, validate: {
+      type: DataTypes.STRING, validate: {
         isEmail: true
       }
     },
     password: {
       type: DataTypes.STRING,
     },
-    phone: { type: DataTypes.STRING, unique: true, validate: { is: /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/ } },
+    phone: { type: DataTypes.STRING, validate: { is: /^(009665|9665|\+9665|05|5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$/ } },
     gender: { type: DataTypes.INTEGER, validate: { len: [1, 1] } },
     isActive: DataTypes.BOOLEAN,
     IsApproved: DataTypes.BOOLEAN,

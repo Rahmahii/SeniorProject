@@ -75,9 +75,87 @@ function FindProductByBarcode(req, res) {
         })
     })
 }
+//////////////////////////////////////////////////////////////////////
+function index(req, res) {
+    models.product.findAll().then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
+async function updateName(req, res) {
+    const id = req.body.id
+    const updateduser = {
+        name: req.body.name,
+    }
+    models.product.update(updateduser, { where: { id: id } }).then(result => {
+        res.status(201).json({
+            message: "product name updated successfully",
+            product: updateduser,
+            status:true
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error,
+            status:true
+        })
+    })
 
+}
+//////////////////////////////////////////////////////////////////////
+async function updateCategory(req, res) {
+    const id = req.body.id
+    const updateduser = {
+        categoryId: req.body.categoryId,
+    }
+    models.product.update(updateduser, { where: { id } }).then(result => {
+        res.status(201).json({
+            message: "product category updated successfully",
+            product: updateduser,
+            status:true
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error,
+            status:true
+        })
+    })
+
+}
+//////////////////////////////////////////////////////////////////////
+async function updatePrice(req, res) {
+    const id = req.body.id
+    const updateduser = {
+        price: req.body.price,
+        sellPrice: req.body.price,
+    }
+    models.product.update(updateduser, { where: { id } }).then(result => {
+        res.status(201).json({
+            message: "product category updated successfully",
+            product: updateduser,
+            status:true
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error,
+            status:true
+        })
+    })
+
+}
+//////////////////////////////////////////////////////////////////////
 module.exports = {
     getProductsBySore,
     FindProductByBarcode,
     FindProductById,
+    updateCategory,
+    updateName,
+    updatePrice
 }
