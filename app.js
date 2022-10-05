@@ -2,6 +2,10 @@ const express= require('express')
 const bodyParser=require('body-parser')
 const app=express()
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
+const path = require('path')
+
+app.use(express.static(path.join(__dirname)))
 
 const userRoute=require('./routes/user.route')
 app.use("/user",userRoute)

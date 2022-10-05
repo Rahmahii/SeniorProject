@@ -20,10 +20,12 @@
     "fastest-validator": "^1.12.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "node-geocoder": "^4.2.0",
     "nodemon": "^2.0.19",
     "opencage-api-client": "^1.0.0",
+    "path": "^0.12.7",
     "sequelize": "^6.21.3"
   }
 }

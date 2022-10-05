@@ -10,16 +10,20 @@ module.exports = {
       storeId: 1,
       categoryId:2,
       currencyId:1,
+      description:"330 ML",
+      image:"products\\1665003555022pepsi.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
       name: 'Layes',
-      price: 2,
-      sellPrice: 2,
+      price: 8,
+      sellPrice: 8,
       barcodeNum: 6009510806151,
       storeId: 1,
       categoryId:1,
       currencyId:1,
+      description:"Multi flavor 105 g",
+      image:"products\\1665007682855Lays.png",
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -31,6 +35,8 @@ module.exports = {
       storeId: 2,
       categoryId:3,
       currencyId:1,
+      description:"For math",
+      image:"products\\1665008483099calculusjpg.png",
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -42,6 +48,8 @@ module.exports = {
       storeId: 2,
       categoryId:3,
       currencyId:1,
+      description:"Multicolor from Roco",
+      image:"products\\1665008589084pen.png",
       createdAt: new Date(),
       updatedAt: new Date()
     },

@@ -8,7 +8,7 @@ function findNearest(req, res) {
     var lon2 = 0
     var dist = 0
     var storeList = []
-    models.Store.findAll().then(result => {
+    models.store.findAll().then(result => {
         if (result) {
             for (var i = 0; i < result.length; i++) {
                 lat2 = result[i].Location_Latitude
@@ -30,6 +30,7 @@ function findNearest(req, res) {
                 })
             }
         }
+        
     }).catch(error => {
         res.status(500).json({
             message: "something went wrong ",

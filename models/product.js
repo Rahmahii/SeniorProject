@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   product.init({
     name: DataTypes.STRING,
+    image: DataTypes.STRING,
     description: DataTypes.STRING,
     price: {type:DataTypes.DOUBLE,validate: { min: 1}},
     sellPrice: {type:DataTypes.DOUBLE,validate: { min: 1}},

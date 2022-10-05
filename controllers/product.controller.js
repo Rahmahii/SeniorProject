@@ -87,6 +87,84 @@ function index(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
+
+function StorAdminView(req, res) {
+    const store = req.body.storeId
+    models.product.belongsTo(models.category)
+    models.category.hasMany(models.product)
+
+    models.product.findAll({
+        where: { storeId: store },
+        attributes: ['id','name', 'price', 'barcodeNum', 'description','image'],
+        include: [{
+            model: models.category,
+            where: models.category.id = models.product.categoryId,
+            attributes: ['name']
+        }]
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
+function create(req, res) {
+    var product = {
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        sellPrice: req.body.sellPrice,
+        barcodeNum: req.body.barcodeNum,
+        categoryId: req.body.categoryId,
+        storeId: req.body.storeId,
+        currencyId: req.body.currencyId,
+        image: req.file.path
+    }
+    models.product.create(product).then(result => {
+        if (result) {
+            res.status(201).json({
+                message: "product create successfully ",
+                product: result,
+            })
+        }
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
+async function update(req, res) {
+    const id = req.body.id
+    const product = {
+        name: req.body.name,
+        description: req.body.description,
+        price: req.body.price,
+        sellPrice: req.body.sellPrice,
+        barcodeNum: req.body.barcodeNum,
+        categoryId: req.body.categoryId,
+        storeId: req.body.storeId,
+        currencyId: req.body.currencyId,
+        image: req.file.path
+    }
+
+    models.product.update(product, { where: { id } }).then(result => {
+        res.status(201).json({
+            message: "product updated successfully",
+            product: product
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+
+}
+//////////////////////////////////////////////////////////////////////
 async function updateName(req, res) {
     const id = req.body.id
     const updateduser = {
@@ -96,13 +174,13 @@ async function updateName(req, res) {
         res.status(201).json({
             message: "product name updated successfully",
             product: updateduser,
-            status:true
+            status: true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
             error: error,
-            status:true
+            status: true
         })
     })
 
@@ -117,13 +195,13 @@ async function updateCategory(req, res) {
         res.status(201).json({
             message: "product category updated successfully",
             product: updateduser,
-            status:true
+            status: true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
             error: error,
-            status:true
+            status: true
         })
     })
 
@@ -139,13 +217,13 @@ async function updatePrice(req, res) {
         res.status(201).json({
             message: "product category updated successfully",
             product: updateduser,
-            status:true
+            status: true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
             error: error,
-            status:true
+            status: true
         })
     })
 
@@ -157,5 +235,9 @@ module.exports = {
     FindProductById,
     updateCategory,
     updateName,
-    updatePrice
+    updatePrice,
+    index,
+    StorAdminView,
+    create,
+    update
 }
