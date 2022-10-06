@@ -30,7 +30,7 @@ function findNearest(req, res) {
                 })
             }
         }
-        
+
     }).catch(error => {
         res.status(500).json({
             message: "something went wrong ",
@@ -100,6 +100,7 @@ function create(req, res) {
         }
     })
 }
+//////////////////////////////////////////////////////////////////////
 function GetAddress(req, res) {
     var lat = req.body.Location_Latitude
     var lon = req.body.Location_Longitude
@@ -124,28 +125,23 @@ function GetAddress(req, res) {
                 console.log('status', data.status.message);
                 console.log('total_results', data.total_results);
                 res.status(400).json({
-                    message: "something went wrong ",
+                    message: "Enter the data correctly",
                     status: false
                 })
             }
         })
-        // .catch((error) => {
-        //     res.status(400).json({
-        //         message: "something went wrong ",
-        //         status: false
-        //     })
-        //     console.log('error', error.message);
-        //     if (error.status.code === 402) {
-        //         console.log('hit free trial daily limit');
-        //         console.log('become a customer: https://opencagedata.com/pricing');
-        //     }
-        // });
+        .catch((error) => {
+            res.status(400).json({
+                message: "something went wrong ",
+                status: false
+            })
+            console.log('error', error.message);
+            if (error.status.code === 402) {
+                console.log('hit free trial daily limit');
+                console.log('become a customer: https://opencagedata.com/pricing');
+            }
+        });
 }
-// ... prints
-// 1330 Middle Avenue, Menlo Park, Californie 94025, États-Unis d'Amérique
-// Middle Avenue
-// America/Los_Angeles
-
 //////////////////////////////////////////////////////////////////////
 module.exports = {
     index, create, findNearest, GetAddress

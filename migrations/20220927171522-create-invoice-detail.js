@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      invoiceId: {
+      invoiceHeaderId: {
         type: Sequelize.INTEGER,  references: { model: 'invoice_headers', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: false,
       },

@@ -11,7 +11,6 @@ module.exports = {
       isActive:1,
       isActive:1,
       roleId:1,
-      storeId:1,
       createdAt: new Date(),
       updatedAt: new Date()
     },

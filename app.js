@@ -16,4 +16,7 @@ app.use("/store",storeRoute)
 const productRoute=require('./routes/product.route')
 app.use("/product",productRoute)
 
+const invoiceRoute=require('./routes/invoice.route')
+app.use("/invoice",invoiceRoute)
+
 module.exports=app

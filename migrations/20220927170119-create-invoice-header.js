@@ -22,7 +22,7 @@ module.exports = {
       },
       gatawayId: {
         type: Sequelize.INTEGER,  references: { model: 'payment_gatways', key: 'id' }, onUpdate: 'CASCADE',
-        allowNull: false,
+        allowNull: true,
       },
       userId: {
         type: Sequelize.INTEGER,  references: { model: 'users', key: 'id' }, onUpdate: 'CASCADE',
@@ -30,27 +30,32 @@ module.exports = {
       },
       CreditCardHolder: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       CreditCardNum: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       CreditBankName: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       depositCardHolder: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       depositCardNum: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       depositBankName: {
         type: Sequelize.STRING,
+        allowNull: true,
+      },
+      IsPaid: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

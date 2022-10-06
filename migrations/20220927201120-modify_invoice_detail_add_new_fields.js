@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('invoice_details', [{
-      invoiceId: 1,
+      invoiceHeaderId: 1,
       productId:1,
       quantity:1,
       PurchasingPrice:2.5,
@@ -11,7 +11,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      invoiceId: 1,
+      invoiceHeaderId: 1,
       productId:2,
       quantity:1,
       PurchasingPrice:2,
@@ -19,7 +19,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      invoiceId: 2,
+      invoiceHeaderId: 2,
       productId:3,
       quantity:1,
       PurchasingPrice:500,

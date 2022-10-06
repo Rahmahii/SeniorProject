@@ -12,15 +12,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.invoice_detail.belongsTo(models.invoice_header)
+      
     }
   }
   invoice_detail.init({
-    invoiceId: {
+    invoiceHeaderId: {
       type: DataTypes.INTEGER,
       references: {
         model: invoice_header,
-        key: "invoiceId"
+        key: "invoiceHeaderId"
       }
     },
     productId: {

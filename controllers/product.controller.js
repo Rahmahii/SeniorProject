@@ -1,6 +1,6 @@
 const models = require('../models')
 //////////////////////////////////////////////////////////////////////
-function getProductsBySore(req, res) {
+function getProductsByStore(req, res) {
     storeId = req.body.storeId
     models.product.findAll({ where: { storeId } }).then(async result => {
         if (result) {
@@ -47,8 +47,6 @@ function FindProductById(req, res) {
         })
     })
 }
-
-
 //////////////////////////////////////////////////////////////////////
 function FindProductByBarcode(req, res) {
     const barcodeNum = req.body.barcodeNum
@@ -90,12 +88,10 @@ function index(req, res) {
 
 function StorAdminView(req, res) {
     const store = req.body.storeId
-    models.product.belongsTo(models.category)
-    models.category.hasMany(models.product)
 
     models.product.findAll({
         where: { storeId: store },
-        attributes: ['id','name', 'price', 'barcodeNum', 'description','image'],
+        attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
         include: [{
             model: models.category,
             where: models.category.id = models.product.categoryId,
@@ -137,6 +133,7 @@ function create(req, res) {
         })
     })
 }
+//////////////////////////////////////////////////////////////////////
 async function update(req, res) {
     const id = req.body.id
     const product = {
@@ -165,7 +162,7 @@ async function update(req, res) {
 
 }
 //////////////////////////////////////////////////////////////////////
-async function updateName(req, res) {
+function updateName(req, res) {
     const id = req.body.id
     const updateduser = {
         name: req.body.name,
@@ -186,7 +183,7 @@ async function updateName(req, res) {
 
 }
 //////////////////////////////////////////////////////////////////////
-async function updateCategory(req, res) {
+function updateCategory(req, res) {
     const id = req.body.id
     const updateduser = {
         categoryId: req.body.categoryId,
@@ -207,7 +204,7 @@ async function updateCategory(req, res) {
 
 }
 //////////////////////////////////////////////////////////////////////
-async function updatePrice(req, res) {
+function updatePrice(req, res) {
     const id = req.body.id
     const updateduser = {
         price: req.body.price,
@@ -230,7 +227,7 @@ async function updatePrice(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 module.exports = {
-    getProductsBySore,
+    getProductsByStore,
     FindProductByBarcode,
     FindProductById,
     updateCategory,

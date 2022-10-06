@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.store.hasMany(models.product)
+      models.store.hasMany(models.invoice_header)
+      models.store.hasMany(models.user)
+      models.store.hasMany(models.integerate)
     }
   }
   store.init({

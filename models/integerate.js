@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.integerate.belongsTo(models.store)
+      models.integerate.belongsTo(models.payment_gatway)
     }
   }
   integerate.init({

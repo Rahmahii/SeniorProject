@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      //models.invoice_detail.belongsTo(models.invoice_header)
+      models.invoice_header.hasMany(models.invoice_detail)
     }
   }
   invoice_header.init({
@@ -40,11 +41,14 @@ module.exports = (sequelize, DataTypes) => {
         key: "storeId"
       }
     },
+    IsPaid:{
+      type:DataTypes.BOOLEAN
+    },
     CreditCardHolder: DataTypes.STRING,
     CreditCardNum: { type:DataTypes.STRING, validate: {isCreditCard: true} } ,
     CreditBankName: DataTypes.STRING,
     depositCardHolder: DataTypes.STRING,
-    depositCardNum:{ type:DataTypes.STRING, validate: {isCreditCard: true} },
+    depositCardNum:{ type:DataTypes.STRING },
     depositBankName: DataTypes.STRING
   }, {
     sequelize,

@@ -1,7 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const user = require('./user')
+const {Model} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class payment_card extends Model {
     /**
@@ -14,7 +13,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   payment_card.init({
-    userId: DataTypes.INTEGER,
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: user,
+        key: "userId"
+      }
+    },
     cardHolderName: DataTypes.STRING,
     cardNum: { type:DataTypes.STRING, validate: {isCreditCard: true} },
     CVV: DataTypes.INTEGER,
