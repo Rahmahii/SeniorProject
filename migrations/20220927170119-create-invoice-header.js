@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.INTEGER,  references: { model: 'stores', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: false,
       },
-      gatawayId: {
+      paymentGatwayId: {
         type: Sequelize.INTEGER,  references: { model: 'payment_gatways', key: 'id' }, onUpdate: 'CASCADE',
         allowNull: true,
       },

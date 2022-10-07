@@ -15,16 +15,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       //models.invoice_detail.belongsTo(models.invoice_header)
       models.invoice_header.hasMany(models.invoice_detail)
+      models.invoice_header.belongsTo(models.payment_gatway)
     }
   }
   invoice_header.init({
     purchaseDate: DataTypes.DATE,
     totalPrice:{ type:DataTypes.DOUBLE,validate: { min: 1}},
-    gatawayId: {
+    paymentGatwayId: {
       type: DataTypes.INTEGER,
       references: {
         model: payment_gatway,
-        key: "gatawayId"
+        key: "paymentGatwayId"
       }
     },
     userId: {
