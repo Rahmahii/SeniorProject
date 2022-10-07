@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       models.user.hasMany(models.invoice_header)
       models.user.hasMany(models.payment_card)
       models.user.belongsTo(models.role)
-      models.user.belongsTo(models.store)
+      models.user.hasOne(models.store)
     }
   }
   user.init({

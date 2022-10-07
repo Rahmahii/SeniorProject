@@ -11,7 +11,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       }, {
-        name: 'sub-admin',
+        name: 'store-admin',
         createdAt: new Date(),
         updatedAt: new Date()
       }

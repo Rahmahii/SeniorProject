@@ -67,6 +67,7 @@ module.exports = {
       name: 'unique_phone'
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('users');
   }

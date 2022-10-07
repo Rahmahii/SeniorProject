@@ -19,6 +19,40 @@ function getUserByPhone(req, res) {
         }
     })
 }
+function getUserByRole(req, res) {
+    const roleId = req.body.roleId
+    models.user.findAll({ where: { roleId } }).then(async result => {
+        if (result) {
+            res.status(200).json({
+                users: result,
+                status: true
+            });
+        } else {
+            res.status(400).json({
+                message: "there are no users",
+                status: false
+            });
+        }
+    })
+}
+function getUserByStore(req, res) {
+    const storeId = req.body.storeId
+    models.store.findAll({
+        where: { id: storeId },
+        attributes: ['name'],
+        include: [{
+            model: models.user,
+            attributes: ['id','name', 'email', 'phone', 'createdAt']
+        }]
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
 function show(req, res) {
     const id = req.params.id
     models.user.findByPk(id).then(result => {
@@ -84,6 +118,8 @@ module.exports = {
     show,
     index,
     update,
-    destroy
+    destroy,
+    getUserByRole,
+    getUserByStore
 }
 
