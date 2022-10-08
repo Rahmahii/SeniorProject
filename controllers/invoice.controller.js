@@ -1,6 +1,5 @@
-const { DATE } = require('sequelize')
 const models = require('../models')
-
+var Sequelize = require("sequelize");
 function create(req, res) {
     var invoiceHeader = {
         purchaseDate: new Date(),
@@ -70,10 +69,10 @@ function getUserInvoices(req, res) {
                 attributes: ['totalPrice'],
                 include: [{
                     model: models.invoice_detail,
-                    attributes: [ 'quantity'],
-                    include:[{
+                    attributes: ['quantity'],
+                    include: [{
                         model: models.product,
-                        attributes: ['name','sellPrice'],
+                        attributes: ['name', 'sellPrice'],
                     }]
                 },
                 {
@@ -103,7 +102,39 @@ function getUserInvoices(req, res) {
 
 
 }
+function getStoreInvoices(req, res) {
+    const storeId = req.body.storeId
+   
+    models.invoice_header.findAll({
+        where: {storeId},
+        attributes: [[Sequelize.fn('sum', Sequelize.col('totalPrice')), 'total_amount'],
+        [Sequelize.fn('count', Sequelize.col('invoice_header.id')), 'count'],
+        [Sequelize.fn('max', Sequelize.col('invoice_header.purchaseDate')), 'last']
+    ],
+       // 
+        include: [{
+            model: models.user,
+            attributes: ['name','phone'],
+        }, 
+        {
+            model: models.store,
+            attributes: ['name'],
+        }
+        ],
+       group: ['invoice_header.storeId','userId'],
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+
+}
 module.exports = {
     create,
-    getUserInvoices
+    getUserInvoices,
+    getStoreInvoices
 }

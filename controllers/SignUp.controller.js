@@ -139,12 +139,7 @@ function signUp(req, res) {
             user.password = await tool.hashing(user.password)
             //start new user 
             models.user.create(user).then(result => {
-                var token = jwt.sign({
-                    phone: user.phone,
-                    name: user.name,
-                    Id: user.id,
-                    roleId:user.roleId
-                }, process.env.JWT_SECRET, {
+                var token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
                     expiresIn: process.env.JWT_EXPIRES_IN,
                 })
                 if (result) {
@@ -175,12 +170,7 @@ function login(req, res) {
         } else {
             bcrypt.compare(req.body.password, user.password, function (err, result) {
                 if (result) {
-                    const token = jwt.sign({
-                        phone: user.phone,
-                        name: user.name,
-                        Id: user.id,
-                        roleId:user.roleId
-                    }, process.env.JWT_SECRET, {
+                    const token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
                         expiresIn: process.env.JWT_EXPIRES_IN,
                     });
                     res.status(201).json({

@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
       //models.invoice_detail.belongsTo(models.invoice_header)
       models.invoice_header.hasMany(models.invoice_detail)
       models.invoice_header.belongsTo(models.payment_gatway)
+      models.invoice_header.belongsTo(models.user)
+      models.invoice_header.belongsTo(models.store)
     }
   }
   invoice_header.init({
