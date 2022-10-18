@@ -56,8 +56,8 @@ function distance(lat1, lon1, lat2, lon2) {
     return dist
 }
 //////////////////////////////////////////////////////////////////////
-function index(req, res) {
-    models.Store.findAll().then(result => {
+function getStoresNames(req, res) {
+    models.store.findAll( {attributes: ['id','name']}).then(result => {
         res.status(201).json(result)
     }).catch(error => {
         res.status(500).json({
@@ -69,7 +69,7 @@ function index(req, res) {
 //////////////////////////////////////////////////////////////////////
 function create(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
-    models.Store.findOne({ where: { phone } }).then(async result => {
+    models.store.findOne({ where: { phone } }).then(async result => {
         if (result) {
             res.json({
                 message: "Store already exists!",
@@ -144,5 +144,5 @@ function GetAddress(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 module.exports = {
-    index, create, findNearest, GetAddress
+    getStoresNames, create, findNearest, GetAddress
 }

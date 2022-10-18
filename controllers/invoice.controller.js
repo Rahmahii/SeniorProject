@@ -1,5 +1,7 @@
 const models = require('../models')
 var Sequelize = require("sequelize");
+const { QueryTypes } = require('@sequelize/core');
+
 function create(req, res) {
     var invoiceHeader = {
         purchaseDate: new Date(),
@@ -60,6 +62,7 @@ function create(req, res) {
         })
     })
 }
+
 function getUserInvoices(req, res) {
     const user = req.body.userId
     models.user.findByPk(user).then(result => {
@@ -104,24 +107,24 @@ function getUserInvoices(req, res) {
 }
 function getStoreInvoices(req, res) {
     const storeId = req.body.storeId
-   
+
     models.invoice_header.findAll({
-        where: {storeId},
+        where: { storeId },
         attributes: [[Sequelize.fn('sum', Sequelize.col('totalPrice')), 'total_amount'],
         [Sequelize.fn('count', Sequelize.col('invoice_header.id')), 'count'],
         [Sequelize.fn('max', Sequelize.col('invoice_header.purchaseDate')), 'last']
-    ],
-       // 
+        ],
+        // 
         include: [{
             model: models.user,
-            attributes: ['name','phone'],
-        }, 
+            attributes: ['name', 'phone'],
+        },
         {
             model: models.store,
             attributes: ['name'],
         }
         ],
-       group: ['invoice_header.storeId','userId'],
+        group: ['invoice_header.storeId', 'userId'],
     }).then(result => {
         res.status(201).json(result)
     }).catch(error => {
@@ -133,8 +136,59 @@ function getStoreInvoices(req, res) {
     })
 
 }
+function dashboard(req, res) {
+    const storeId = req.body.storeId
+    models.invoice_header.findAll({
+        where: { storeId },
+        attributes: [
+            [Sequelize.literal('COUNT(DISTINCT(userId))'), 'no_users'],
+            [Sequelize.fn('count', Sequelize.col('invoice_header.id')), 'total'],
+            [Sequelize.fn('sum', Sequelize.col('totalPrice')), 'total_amount']
+        ],
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
+async function dashboard_2(req, res) {
+    
+    // models.product.hasMany(models.invoice_detail)
+    // models.invoice_detail.belongsTo(models.product)
+        const storeId = req.body.storeId
+        models.product.findAll({
+            where: { storeId },
+            attributes: ['name'],
+            include: [{
+                
+                model: models.invoice_detail,
+                attributes: [[Sequelize.fn('count', Sequelize.col('productId')), 'total'],
+                [Sequelize.fn('sum', Sequelize.col('quantity')), 'quantity']], 
+                order: [['invoice_detail.total', 'DESC']],      
+            }],
+            limit: 1,
+            group: ['name'],
+            
+        }).then(result => {
+            res.status(201).json(result)
+        }).catch(error => {
+            res.status(500).json({
+                message: "something went wrong ",
+                error: error,
+                status: false
+            })
+        })
+
+  
+}
 module.exports = {
     create,
     getUserInvoices,
-    getStoreInvoices
+    getStoreInvoices,
+    dashboard,
+    dashboard_2
 }

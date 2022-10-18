@@ -2,6 +2,7 @@ const models = require('../models')
 const tool = require('../tool')
 require("dotenv").config();
 
+
 function getUserByPhone(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
     models.user.findOne({ where: { phone } }).then(async result => {

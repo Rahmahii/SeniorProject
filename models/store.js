@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     Location_Latitude: DataTypes.DOUBLE,
-    Location_Longitude: DataTypes.DOUBLE
+    Location_Longitude: DataTypes.DOUBLE,
+    logo:DataTypes.STRING
   }, {
     sequelize,
     modelName: 'store',
