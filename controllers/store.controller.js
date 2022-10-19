@@ -57,7 +57,7 @@ function distance(lat1, lon1, lat2, lon2) {
 }
 //////////////////////////////////////////////////////////////////////
 function getStoresNames(req, res) {
-    models.store.findAll( {attributes: ['id','name']}).then(result => {
+    models.store.findAll({ attributes: ['id', 'name'] }).then(result => {
         res.status(201).json(result)
     }).catch(error => {
         res.status(500).json({
@@ -81,7 +81,8 @@ function create(req, res) {
                 phone: phone,
                 email: req.body.email,
                 Location_Latitude: req.body.Location_Latitude,
-                Location_Longitude: req.body.Location_Longitude
+                Location_Longitude: req.body.Location_Longitude,
+                logo:req.file.path
             }
             //start new user 
             models.store.create(store).then(result => {

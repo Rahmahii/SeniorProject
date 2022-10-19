@@ -107,6 +107,28 @@ function StorAdminView(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
+function FindSimilar(req, res) {
+    const store = req.body.storeId
+    const category = req.body.categoryId
+
+    models.product.findAll({
+        where: { storeId: store,categoryId:category },
+        attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
+        include: [{
+            model: models.category,
+            where: models.category.id = models.product.categoryId,
+            attributes: ['name']
+        }]
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
 function create(req, res) {
     var product = {
         name: req.body.name,
@@ -236,5 +258,6 @@ module.exports = {
     index,
     StorAdminView,
     create,
-    update
+    update,
+    FindSimilar
 }

@@ -32,6 +32,7 @@ router.post("/StoreProducts", productController.getProductsByStore)
 router.post("/FindProductByBarcode", productController.FindProductByBarcode)
 router.get("/getAll", productController.index)
 router.post("/StorAdminView", productController.StorAdminView)
+router.post("/FindSimilar", productController.FindSimilar)
 
 router.post("/AddProduct", upload.single('image'), productController.create)
 router.post("/UpdateProduct", upload.single('image'), productController.update)
