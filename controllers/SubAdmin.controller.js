@@ -1,13 +1,15 @@
 const models = require('../models')
 const tool = require('../tool')
+var jwt = require('jsonwebtoken');
 //////////////////////////////////////////////////////////////////////
-function signUp(req, res) {
+function signUpAdmin(req, res) {
     const email = req.body.email
     models.user.findOne({ where: { email } }).then(async result => {
         if (result) {
             res.json({
                 message: "user already exists!",
-                user: result
+                user: result,
+                status:false
             });
         } else {
             const phone = tool.PhoneFormat(req.body.phone)
@@ -19,36 +21,38 @@ function signUp(req, res) {
                 storeId: req.body.storeId,
                 roleId: 3,
             }
-            const schema = {
-                password: {
-                    type: "string", min: 3, max: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]*$/
-                }
-            }
-            const v = new Validator();
-            const validateResponse = v.validate(user, schema)
-            if (validateResponse !== true) {
-                return res.status(400).json({
-                    errors: validateResponse
-                })
-            }
+            // const schema = {
+            //     password: {
+            //         type: "string", min: 3, max: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]*$/
+            //     }
+            // }
+            // const v = new Validator();
+            // const validateResponse = v.validate(user, schema)
+            // if (validateResponse !== true) {
+            //     return res.status(400).json({
+            //         errors: validateResponse
+            //     })
+            // }
             //hashing the password for securty
             user.password = await tool.hashing(user.password)
             //start new user 
             models.user.create(user).then(result => {
-                var token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_EXPIRES_IN,
-                })
+                // var token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
+                //     expiresIn: process.env.JWT_EXPIRES_IN,
+                // })
                 if (result) {
                     res.status(201).json({
                         message: "sub-admin create successfully ",
                         user: result,
-                        token: token
+                        status:true
+                       // token: token
                     })
                 }
             }).catch(error => {
                 res.status(400).json({
                     message: "something went wrong ",
-                    error: error
+                    error: error,
+                    status:false
                 })
             })
         }
@@ -94,6 +98,6 @@ function login(req, res) {
 
 
 module.exports = {
-    signUp,
+    signUpAdmin,
     login,
 }
