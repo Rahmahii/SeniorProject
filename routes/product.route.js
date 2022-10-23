@@ -1,5 +1,6 @@
 const express = require('express')
 const productController = require('../controllers/product.controller')
+const middleware = require('../middleware/auth')
 const router = express.Router();
 const multer = require('multer')
 
@@ -28,10 +29,10 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
-router.post("/StoreProducts", productController.getProductsByStore)
+router.post("/StoreProducts", middleware.checkAuth,productController.getProductsByStore)
 router.post("/FindProductByBarcode", productController.FindProductByBarcode)
 router.get("/getAll", productController.index)
-router.post("/StorAdminView", productController.StorAdminView)
+router.post("/StorAdminView", middleware.checkAuth,productController.StorAdminView)
 router.post("/FindSimilar", productController.FindSimilar)
 
 router.post("/AddProduct", upload.single('image'), productController.create)

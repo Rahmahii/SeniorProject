@@ -6,6 +6,10 @@ function checkAuth(req, res, next){
         const token = req.headers.authorization.split(" ")[1]; 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         req.userData = decodedToken;
+        // res.json({
+        //     'message': "login success",
+        //     "statuse":"valid"
+        // });
         next();
     }catch(e){
         return res.status(401).json({

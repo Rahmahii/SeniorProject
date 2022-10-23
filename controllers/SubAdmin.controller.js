@@ -1,6 +1,7 @@
 const models = require('../models')
 const tool = require('../tool')
 var jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 //////////////////////////////////////////////////////////////////////
 function signUpAdmin(req, res) {
     const email = req.body.email
@@ -9,7 +10,7 @@ function signUpAdmin(req, res) {
             res.json({
                 message: "user already exists!",
                 user: result,
-                status:false
+                status: false
             });
         } else {
             const phone = tool.PhoneFormat(req.body.phone)
@@ -19,6 +20,7 @@ function signUpAdmin(req, res) {
                 phone: phone,
                 password: req.body.password,
                 storeId: req.body.storeId,
+                gender: req.body.gender,
                 roleId: 3,
             }
             // const schema = {
@@ -44,15 +46,15 @@ function signUpAdmin(req, res) {
                     res.status(201).json({
                         message: "sub-admin create successfully ",
                         user: result,
-                        status:true
-                       // token: token
+                        status: true
+                        // token: token
                     })
                 }
             }).catch(error => {
                 res.status(400).json({
                     message: "something went wrong ",
                     error: error,
-                    status:false
+                    status: false
                 })
             })
         }
@@ -61,28 +63,43 @@ function signUpAdmin(req, res) {
 //////////////////////////////////////////////////////////////////////
 function login(req, res) {
     const email = req.body.email
+    console.log(email)
     models.user.findOne({ where: { email } }).then(user => {
         if (user === null) {
             res.status(401).json({
                 message: "You don't have account ... make Sign-Up",
+                status: false
             });
-        } else {
-            bcrypt.compare(req.body.password, user.password, function (err, result) {
+        }
+        else if (user.IsApproved==0) {    
+            res.status(401).json({
+                message: "You are not approved yet please wait untel get approved",
+                status: "waiting"
+            });
+
+        } else {    
+            bcrypt.compare(req.body.password, user.password, function (err, result) {  
                 if (result) {
                     const token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
                         expiresIn: process.env.JWT_EXPIRES_IN,
                     });
-                    res.status(201).json({
+                    res
+                    // cookie("access_token", token, {
+                    //     httpOnly: true,
+                    //     //secure: process.env.JWT_SECRET,
+                    //   })
+                      .status(201).json({
+                        message: "Success",
                         status: true,
-                        token,
+                        token:token,
                         data: {
                             user,
                         },
-                    });
+                    })
                 } else {
                     res.status(400).json({
                         message: "incorrect password",
-                        status:false
+                        status: false
                     });
                 }
             });
@@ -90,7 +107,7 @@ function login(req, res) {
     }).catch(error => {
         res.status(500).json({
             message: "Something went wrong!",
-            status:false
+            status: false
         });
     });
 }
