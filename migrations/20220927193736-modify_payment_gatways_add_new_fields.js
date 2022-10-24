@@ -2,7 +2,17 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('payment_gatways', [{
+    return queryInterface.bulkInsert('payment_gatways', [
+      {
+        name: "Cash",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },{
+        name: "PayPal",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
       name: "Mada",
       createdAt: new Date(),
       updatedAt: new Date()

@@ -79,18 +79,17 @@ function index(req, res) {
 async function update(req, res) {
     const id = req.params.id
     const updateduser = {
+       id: req.body.id,
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
-        phone: req.body.phone,
         gender: req.body.gender,
     }
-    updateduser.password = await tool.hashing(updateduser.password)
+  
 
-    models.user.update(updateduser, { where: { id: id } }).then(result => {
+    models.user.update(updateduser, { where: { id: updateduser.id } }).then(result => {
         res.status(201).json({
             message: "user updated successfully",
-            user: updateduser
+            user: result
         })
     }).catch(error => {
         res.status(400).json({

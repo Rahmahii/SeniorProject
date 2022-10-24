@@ -5,6 +5,7 @@ const { QueryTypes } = require('@sequelize/core');
 function create(req, res) {
     var invoiceHeader = {
         purchaseDate: new Date(),
+
         totalPrice: req.body.totalPrice,
         gatawayId: req.body.gatawayId,
         userId: req.body.userId,
@@ -15,11 +16,18 @@ function create(req, res) {
         depositCardHolder: req.body.depositCardHolder,
         depositCardNum: req.body.depositCardNum,
         depositBankName: req.body.depositBankName,
+        IsPaid:false
+    }
+    if(invoiceHeader.gatawayId!=1){  
+        invoiceHeader.IsPaid=true
     }
     //start new 
     i = []
+   
     models.invoice_header.create(invoiceHeader).then(invoice_header => {
         if (invoice_header) {
+            models.store.findByPk(invoiceHeader.storeId).then(store => {
+
             var items = req.body.items
             console.log(items)
 
@@ -30,18 +38,25 @@ function create(req, res) {
                         console.log("from iside condetion")
 
                         var item = {
-                            invoiceHeaderId: product.id,
+                            invoiceHeaderId: invoice_header.id,
                             productId: items[index].productId,
                             quantity: items[index].quantity,
-                            PurchasingPrice: items[index].PurchasingPrice
+                            PurchasingPrice: items[index].PurchasingPrice,
+                            
                         }
+                        item.product=product.name
                         models.invoice_detail.create(item).then(invoice_detail => {
-                            i.push(invoice_detail)
+                            invoice_detail.product=product.name
+                          
+                            i.push(item)
+                            
                             if (invoice_detail && index == items.length - 1) {
                                 res.status(201).json({
-                                    message: "product create successfully ",
-                                    item: i,
-                                    status: true
+                                    message: "invoice create successfully ",
+                                    invoice_header,
+                                    store:store.name,
+                                    items: i,
+                                    status: true,
                                 })
                             }
                         })
@@ -53,6 +68,7 @@ function create(req, res) {
                     }
                 })
             }
+        })
         }
     }).catch(error => {
         res.status(400).json({

@@ -8,6 +8,7 @@ module.exports = {
       email:"SloTec@gmail.com",
       Location_Latitude:21.535934134955454,
       Location_Longitude: 39.230977415805825,
+      logo:"logos\\1666167698077sloTecLogojpg.jpg",
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
@@ -16,6 +17,7 @@ module.exports = {
       email:"KAU@gmail.com",
       Location_Latitude:21.541682402818033,
       Location_Longitude: 39.209133504624184,
+      logo:"logos\\kau.png",
       createdAt: new Date(),
       updatedAt: new Date()
     }

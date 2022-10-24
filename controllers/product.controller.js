@@ -1,4 +1,5 @@
 const models = require('../models')
+const Op = require('sequelize').Op;
 //////////////////////////////////////////////////////////////////////
 function getProductsByStore(req, res) {
     storeId = req.body.storeId
@@ -110,10 +111,11 @@ function StorAdminView(req, res) {
 function FindSimilar(req, res) {
     const store = req.body.storeId
     const category = req.body.categoryId
+    const productId = req.body.id
 
     models.product.findAll({
-        where: { storeId: store,categoryId:category },
-        attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
+        where: { storeId: store,categoryId:category,id:{ [Op.ne]: productId }},
+       // attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
         include: [{
             model: models.category,
             where: models.category.id = models.product.categoryId,

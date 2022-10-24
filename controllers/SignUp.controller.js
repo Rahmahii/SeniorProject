@@ -123,20 +123,21 @@ function signUp(req, res) {
                 password: req.body.password,
                 roleId: 1
             }
-            const schema = {
-                password: {
-                    type: "string", min: 3, max: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]*$/
-                }
-            }
-            const v = new Validator();
-            const validateResponse = v.validate(user, schema)
-            if (validateResponse !== true) {
-                return res.status(400).json({
-                    errors: validateResponse
-                })
-            }
-            //hashing the password for securty
-            user.password = await tool.hashing(user.password)
+            // const schema = {
+            //     password: {
+            //         type: "string", min: 3, max: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]*$/
+            //     }
+            // }
+            // const v = new Validator();
+            // const validateResponse = v.validate(user, schema)
+            // if (validateResponse !== true) {
+            //     return res.status(400).json({
+            //         errors: validateResponse
+            //     })
+            // }
+            // //hashing the password for securty
+            // user.password = await tool.hashing(user.password)
+            
             //start new user 
             models.user.create(user).then(result => {
                 var token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {

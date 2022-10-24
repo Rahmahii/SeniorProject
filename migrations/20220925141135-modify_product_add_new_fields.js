@@ -14,7 +14,19 @@ module.exports = {
       image:"products\\1665003555022pepsi.png",
       createdAt: new Date(),
       updatedAt: new Date()
-    }, {
+    },
+   { name: 'Almarai juice',
+    price: 1.5,
+    sellPrice: 1.5,
+    barcodeNum: 6281007054997,
+    storeId: 1,
+    categoryId:2,
+    currencyId:1,
+    description:"Almarai juice 180 ml",
+    image:"products\\orange.png",
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }, {
       name: 'Layes',
       price: 8,
       sellPrice: 8,

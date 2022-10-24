@@ -12,7 +12,7 @@ router.post("/getUserByPhone",userController.getUserByPhone)
 router.post("/getUserByRole",userController.getUserByRole)
 router.post("/getUserByStore",middleware.checkAuth,userController.getUserByStore)
 router.get("/",userController.index)
-router.put("/:id",userController.update)
+router.put("/update",userController.update)
 router.delete("/:id",userController.destroy)
 
 
