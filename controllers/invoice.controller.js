@@ -85,18 +85,23 @@ function getUserInvoices(req, res) {
         if (result) {
             models.invoice_header.findAll({
                 where: { userId: user },
-                attributes: ['totalPrice'],
+                attributes: ['totalPrice','createdAt'],
                 include: [{
                     model: models.invoice_detail,
                     attributes: ['quantity'],
                     include: [{
                         model: models.product,
                         attributes: ['name', 'sellPrice'],
-                    }]
+                    },
+                   ]
                 },
                 {
                     model: models.payment_gatway,
                     attributes: ['name']
+                },
+                {
+                    model: models.store,
+                    attributes: ['name'],
                 }
 
                 ],
