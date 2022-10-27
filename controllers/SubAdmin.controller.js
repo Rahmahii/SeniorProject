@@ -35,8 +35,9 @@ function signUpAdmin(req, res) {
             //         errors: validateResponse
             //     })
             // }
+
             //hashing the password for securty
-            user.password = await tool.hashing(user.password)
+          //  user.password = await tool.hashing(user.password)
             //start new user 
             models.user.create(user).then(result => {
                 // var token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
@@ -63,39 +64,35 @@ function signUpAdmin(req, res) {
 //////////////////////////////////////////////////////////////////////
 function login(req, res) {
     const email = req.body.email
-    console.log(email)
     models.user.findOne({ where: { email } }).then(user => {
         if (user === null) {
             res.status(401).json({
                 message: "You don't have account ... make Sign-Up",
                 status: false
             });
-        }
-        else if (user.IsApproved==0) {    
-            res.status(401).json({
-                message: "You are not approved yet please wait untel get approved",
-                status: "waiting"
-            });
-
         } else {    
             bcrypt.compare(req.body.password, user.password, function (err, result) {  
                 if (result) {
+                    if (user.IsApproved==0) {    
+                        res.status(401).json({
+                            message: "You are not approved yet please wait until get approved",
+                            status: "waiting"
+                        });
+            
+                    }else{
                     const token = jwt.sign(tool.sign(user), process.env.JWT_SECRET, {
                         expiresIn: process.env.JWT_EXPIRES_IN,
                     });
-                    res
+                  
                     // cookie("access_token", token, {
                     //     httpOnly: true,
                     //     //secure: process.env.JWT_SECRET,
                     //   })
-                      .status(201).json({
+                    res.status(201).json({
                         message: "Success",
                         status: true,
                         token:token,
-                        data: {
-                            user,
-                        },
-                    })
+                    })}
                 } else {
                     res.status(400).json({
                         message: "incorrect password",

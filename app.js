@@ -1,8 +1,21 @@
 const express= require('express')
 const bodyParser=require('body-parser')
 const app=express()
+
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
+
+
+const cors=require("cors");
+const corsOptions ={
+   origin:'*', 
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions))
+
 const path = require('path')
 
 app.use(express.static(path.join(__dirname)))
@@ -21,5 +34,8 @@ app.use("/invoice",invoiceRoute)
 
 const cardRoute=require('./routes/card.route')
 app.use("/card",cardRoute)
+
+const categoryRoute=require('./routes/category.route')
+app.use("/category",categoryRoute)
 
 module.exports=app

@@ -132,17 +132,19 @@ function FindSimilar(req, res) {
 }
 //////////////////////////////////////////////////////////////////////
 function create(req, res) {
+    console.log("ooooooooooo")
     var product = {
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        sellPrice: req.body.sellPrice,
-        barcodeNum: req.body.barcodeNum,
-        categoryId: req.body.categoryId,
-        storeId: req.body.storeId,
+        name: req.body.name[0],
+        description: req.body.description[0],
+        price: req.body.price[0],
+        sellPrice: req.body.sellPrice[0],
+        barcodeNum: req.body.barcodeNum[0],
+        categoryId: req.body.categoryId[0],
+        storeId: req.body.storeId[0],
         currencyId: req.body.currencyId,
-        image: req.file.path
+       image: req.file.path
     }
+    console.log(product)
     models.product.create(product).then(result => {
         if (result) {
             res.status(201).json({
@@ -250,6 +252,20 @@ function updatePrice(req, res) {
 
 }
 //////////////////////////////////////////////////////////////////////
+function destroy(req, res) {
+    const id = req.params.id
+    models.product.destroy({ where: { id: id } }).then(result => {
+        res.status(201).json({
+            message: "product " + id + " deleted successfully",
+        })
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error
+        })
+    })
+}
+
 module.exports = {
     getProductsByStore,
     FindProductByBarcode,
@@ -261,5 +277,6 @@ module.exports = {
     StorAdminView,
     create,
     update,
-    FindSimilar
+    FindSimilar,
+    destroy
 }
