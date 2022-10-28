@@ -25,6 +25,30 @@ function getProductsByStore(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
+function CountProductsforStore(req, res) {
+    storeId = req.body.storeId
+    models.product.findAll({ where: { storeId },attributes: [[Sequelize.fn('count', Sequelize.col('id')), 'total_product']] }).then(async result => {
+        if (result) {
+            res.status(200).json({
+                message: "Store has products",
+                status: true,
+                Products: result,
+            });
+        } else {
+            res.status(400).json({
+                message: "user is not exist",
+                status: false
+            });
+        }
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            status: false,
+            error: error
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
 function FindProductById(req, res) {
     const id = req.body.id
     models.product.findByPk(id).then(result => {

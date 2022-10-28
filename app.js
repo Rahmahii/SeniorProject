@@ -38,4 +38,7 @@ app.use("/card",cardRoute)
 const categoryRoute=require('./routes/category.route')
 app.use("/category",categoryRoute)
 
+const dashboardRoute=require('./routes/dashboard')
+app.use("/dashboard",dashboardRoute)
+
 module.exports=app

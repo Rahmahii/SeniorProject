@@ -31,7 +31,8 @@ const upload = multer({
     fileFilter: fileFilter
 });
 
-router.post("/StoreProducts", middleware.checkAuth, productController.getProductsByStore)
+//router.post("/StoreProducts", middleware.checkAuth, productController.getProductsByStore)
+router.post("/StoreProducts", productController.getProductsByStore)
 
 router.post("/FindProductByBarcode", productController.FindProductByBarcode)
 router.get("/getAll", productController.index)
