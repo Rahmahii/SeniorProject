@@ -20,12 +20,53 @@ module.exports = {
     },
     {
       invoiceHeaderId: 2,
+      productId:1,
+      quantity:1,
+      PurchasingPrice:500,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      invoiceHeaderId: 2,
+      productId:2,
+      quantity:1,
+      PurchasingPrice:500,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      invoiceHeaderId: 3,
       productId:3,
       quantity:1,
       PurchasingPrice:500,
       createdAt: new Date(),
       updatedAt: new Date()
     },
+    {
+      invoiceHeaderId: 3,
+      productId:4,
+      quantity:1,
+      PurchasingPrice:500,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      invoiceHeaderId: 3,
+      productId:1,
+      quantity:1,
+      PurchasingPrice:500,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      invoiceHeaderId: 3,
+      productId:2,
+      quantity:1,
+      PurchasingPrice:500,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    
     ]);
   },
   async down (queryInterface, Sequelize) {

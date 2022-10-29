@@ -1,6 +1,5 @@
 const models = require('../models')
 var Sequelize = require("sequelize");
-const { QueryTypes } = require('@sequelize/core');
 
 function create(req, res) {
     var invoiceHeader = {
@@ -84,7 +83,7 @@ function getUserStoreInvoices(req, res) {
     models.user.findByPk(user).then(result1 => {
         if (result1) {
             models.invoice_header.findAll({
-                where: { userId: user, storeId: store },
+                where: { userId: user, storeId: store, IsPaid: 1 },
                 attributes: ['totalPrice', 'createdAt'],
                 include: [{
                     model: models.invoice_detail,
@@ -181,7 +180,7 @@ function getStoreInvoices(req, res) {
         // 
         include: [{
             model: models.user,
-            attributes: ['id','name', 'phone'],
+            attributes: ['id', 'name', 'phone'],
         },
         {
             model: models.store,
@@ -200,10 +199,46 @@ function getStoreInvoices(req, res) {
     })
 
 }
+function getInvoice(req, res) {
+    const id = req.body.id
+    console.log(id)
+    models.invoice_header.findOne({
+        where: { id: id },
+        attributes: ['totalPrice', 'createdAt'],
+        include: [{
+            model: models.invoice_detail,
+            attributes: ['quantity'],
+            include: [{
+                model: models.product,
+                attributes: ['name', 'sellPrice'],
+            },
+            ]
+        },
+        {
+            model: models.payment_gatway,
+            attributes: ['name']
+        },
+        {
+            model: models.store,
+            attributes: ['name'],
+        }
+
+        ],
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
 
 module.exports = {
     create,
     getUserInvoices,
     getStoreInvoices,
     getUserStoreInvoices,
+    getInvoice
 }

@@ -66,6 +66,15 @@ async function BestProductForStore(req, res) {
 
 }
 
+// models.invoice_header.findAll({
+//     group: [Sequelize.fn('date_trunc', 'day', Sequelize.col('createdAt'))]
+//   }).then(result => {
+//     console.log(JSON.stringify(result))
+// }).catch(error => {
+//    console.log( JSON.stringify(error))
+// })
+
+
 module.exports = {
     BestProductForStore,
     CountProductsforStore,

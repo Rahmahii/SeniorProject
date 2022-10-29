@@ -2,7 +2,6 @@ const models = require('../models')
 const tool = require('../tool')
 require("dotenv").config();
 
-
 function getUserByPhone(req, res) {
     phone = tool.PhoneFormat(req.body.phone)
     models.user.findOne({ where: { phone } }).then(async result => {
@@ -43,7 +42,7 @@ function getUserByStore(req, res) {
         attributes: ['name'],
         include: [{
             model: models.user,
-            attributes: ['id','name', 'email', 'phone', 'createdAt']
+            attributes: ['id', 'name', 'email', 'phone', 'createdAt']
         }]
     }).then(result => {
         res.status(201).json(result)
@@ -76,25 +75,27 @@ function index(req, res) {
     })
 }
 
-async function update(req, res) {
-    const id = req.params.id
+function update(req, res) {
+    const id = req.body.id
+
     const updateduser = {
-       id: req.body.id,
+        id:id,
         name: req.body.name,
         email: req.body.email,
         gender: req.body.gender,
     }
-  
 
-    models.user.update(updateduser, { where: { id: updateduser.id } }).then(result => {
+    models.user.update(updateduser, { where: { id: id }, attributes: ['name', 'email', 'gender'] }).then(result => {
         res.status(201).json({
             message: "user updated successfully",
-            user: result
+            user: updateduser,
+            status:true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
-            error: error
+            error: error,
+            status:false
         })
     })
 

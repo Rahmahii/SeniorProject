@@ -3,7 +3,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('stores', [{
-      name: 'SloTec',
+      name: 'grocery',
       Phone:"0531917860",
       email:"SloTec@gmail.com",
       Location_Latitude:21.535934134955454,

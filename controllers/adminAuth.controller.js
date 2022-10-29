@@ -108,9 +108,6 @@ function login(req, res) {
         });
     });
 }
-
-
-
 module.exports = {
     signUpAdmin,
     login,

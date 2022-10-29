@@ -1,18 +1,19 @@
 const express=require('express')
 const userController=require('../controllers/user.controller')
-const SignUp=require('../controllers/SignUp.controller')
-const Admin=require('../controllers/SubAdmin.controller')
+const SignUp=require('../controllers/signUp.controller')
+const Admin=require('../controllers/adminAuth.controller')
 const middleware = require('../middleware/auth')
 const router=express.Router();
 
 
 
-router.get("/:id",userController.show)//params
 router.post("/getUserByPhone",userController.getUserByPhone)
 router.post("/getUserByRole",userController.getUserByRole)
 router.post("/getUserByStore",middleware.checkAuth,userController.getUserByStore)
+router.put("/updateUser",middleware.checkAuth,userController.update)
+
+router.get("/:id",userController.show)//params
 router.get("/",userController.index)
-router.put("/update",userController.update)
 router.delete("/:id",userController.destroy)
 
 
