@@ -11,7 +11,7 @@ function create(req, res) {
     models.payment_card.create(card).then(result => {
         if (result) {
             res.status(201).json({
-                message: "product create successfully ",
+                message: "card create successfully ",
                 card: result,
                 status:true
             })
@@ -30,7 +30,7 @@ function getUserCards(req, res) {
     models.payment_card.findAll({ where: { userId } }).then(async result => {
         if (result) {
             res.status(200).json({
-                message: "user has cards",
+                message: "card has cards",
                 status: true,
                 cards: result,
             });
