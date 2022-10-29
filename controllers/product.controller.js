@@ -27,7 +27,7 @@ function getProductsByStore(req, res) {
 //////////////////////////////////////////////////////////////////////
 function CountProductsforStore(req, res) {
     storeId = req.body.storeId
-    models.product.findAll({ where: { storeId },attributes: [[Sequelize.fn('count', Sequelize.col('id')), 'total_product']] }).then(async result => {
+    models.product.findAll({ where: { storeId }, attributes: [[Sequelize.fn('count', Sequelize.col('id')), 'total_product']] }).then(async result => {
         if (result) {
             res.status(200).json({
                 message: "Store has products",
@@ -116,7 +116,7 @@ function StorAdminView(req, res) {
 
     models.product.findAll({
         where: { storeId: store },
-        attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
+        attributes: ['id', 'name', 'price','sellPrice', 'barcodeNum', 'description', 'image'],
         include: [{
             model: models.category,
             where: models.category.id = models.product.categoryId,
@@ -138,8 +138,8 @@ function FindSimilar(req, res) {
     const productId = req.body.id
 
     models.product.findAll({
-        where: { storeId: store,categoryId:category,id:{ [Op.ne]: productId }},
-       // attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
+        where: { storeId: store, categoryId: category, id: { [Op.ne]: productId } },
+        // attributes: ['id', 'name', 'price', 'barcodeNum', 'description', 'image'],
         include: [{
             model: models.category,
             where: models.category.id = models.product.categoryId,
@@ -166,7 +166,7 @@ function create(req, res) {
         categoryId: req.body.categoryId[0],
         storeId: req.body.storeId[0],
         currencyId: req.body.currencyId,
-       image: req.file.path
+        image: req.file.path
     }
     console.log(product)
     models.product.create(product).then(result => {
@@ -184,7 +184,7 @@ function create(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
-async function update(req, res) {
+function update(req, res) {
     const id = req.body.id
     const product = {
         name: req.body.name,
@@ -193,84 +193,42 @@ async function update(req, res) {
         sellPrice: req.body.sellPrice,
         barcodeNum: req.body.barcodeNum,
         categoryId: req.body.categoryId,
-        storeId: req.body.storeId,
-        currencyId: req.body.currencyId,
-        image: req.file.path
     }
-
-    models.product.update(product, { where: { id } }).then(result => {
+    console.log(id)
+    console.log(product)
+    models.product.update(product, { where: { id:id } }).then(result => {
         res.status(201).json({
             message: "product updated successfully",
-            product: product
-        })
-    }).catch(error => {
-        res.status(400).json({
-            message: "something went wrong ",
-            error: error
-        })
-    })
-
-}
-//////////////////////////////////////////////////////////////////////
-function updateName(req, res) {
-    const id = req.body.id
-    const updateduser = {
-        name: req.body.name,
-    }
-    models.product.update(updateduser, { where: { id: id } }).then(result => {
-        res.status(201).json({
-            message: "product name updated successfully",
-            product: updateduser,
+            product: product,
             status: true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
             error: error,
-            status: true
+            status: false
         })
     })
 
 }
 //////////////////////////////////////////////////////////////////////
-function updateCategory(req, res) {
+function updateImage(req, res) {
     const id = req.body.id
-    const updateduser = {
-        categoryId: req.body.categoryId,
+    const product = {
+        image: req.file.path
     }
-    models.product.update(updateduser, { where: { id } }).then(result => {
+    console.log(id)
+    models.product.update(product, { where: { id:id } }).then(result => {
         res.status(201).json({
-            message: "product category updated successfully",
-            product: updateduser,
+            message: "product image updated successfully",
+            product: product,
             status: true
         })
     }).catch(error => {
         res.status(400).json({
             message: "something went wrong ",
             error: error,
-            status: true
-        })
-    })
-
-}
-//////////////////////////////////////////////////////////////////////
-function updatePrice(req, res) {
-    const id = req.body.id
-    const updateduser = {
-        price: req.body.price,
-        sellPrice: req.body.price,
-    }
-    models.product.update(updateduser, { where: { id } }).then(result => {
-        res.status(201).json({
-            message: "product category updated successfully",
-            product: updateduser,
-            status: true
-        })
-    }).catch(error => {
-        res.status(400).json({
-            message: "something went wrong ",
-            error: error,
-            status: true
+            status: false
         })
     })
 
@@ -294,9 +252,7 @@ module.exports = {
     getProductsByStore,
     FindProductByBarcode,
     FindProductById,
-    updateCategory,
-    updateName,
-    updatePrice,
+    updateImage,
     index,
     StorAdminView,
     create,

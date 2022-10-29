@@ -6,7 +6,7 @@ function create(req, res) {
         purchaseDate: new Date(),
 
         totalPrice: req.body.totalPrice,
-        gatawayId: req.body.gatawayId,
+        paymentGatwayId: req.body.paymentGatwayId,
         userId: req.body.userId,
         storeId: req.body.storeId,
         CreditCardHolder: req.body.CreditCardHolder,
@@ -17,7 +17,7 @@ function create(req, res) {
         depositBankName: req.body.depositBankName,
         IsPaid: false
     }
-    if (invoiceHeader.gatawayId != 1) {
+    if (invoiceHeader.paymentGatwayId != 1) {
         invoiceHeader.IsPaid = true
     }
     //start new 
@@ -32,7 +32,9 @@ function create(req, res) {
 
                 for (let index = 0; index < items.length; index++) {
                     console.log(items[index].productId)
-                    models.product.findByPk(items[index].productId).then(product => {
+                    models.product.findOne({ where:{id:items[index].productId}}).then(product => {
+                        console.log(product)
+                        if(product){
                         if (product.storeId == invoiceHeader.storeId) {
                             console.log("from iside condetion")
 
@@ -59,6 +61,7 @@ function create(req, res) {
                                     })
                                 }
                             })
+                        }
                         } else {
                             res.status(200).json({
                                 message: "item cannot belong to this store ",
