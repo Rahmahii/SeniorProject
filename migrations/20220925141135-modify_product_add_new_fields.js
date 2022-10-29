@@ -30,7 +30,7 @@ module.exports = {
     }, {
       name: 'Almarai milk',
       price: 5,
-      sellPrice: 5.5,
+      sellPrice: 4,
       barcodeNum: 6281007054997,
       storeId: 1,
       categoryId: 2,
@@ -54,8 +54,8 @@ module.exports = {
     },
     {
       name: 'Lusine',
-      price: 2,
-      sellPrice: 2.75,
+      price: 3,
+      sellPrice: 2,
       barcodeNum: 6281100084013,
       storeId: 1,
       categoryId: 1,

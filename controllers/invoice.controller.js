@@ -101,6 +101,10 @@ function getUserStoreInvoices(req, res) {
                     model: models.payment_gatway,
                     attributes: ['name']
                 },
+                {
+                    model: models.store,
+                    attributes: ['name'],
+                }
                 ],
             }).then(result => {
                 res.status(201).json({ user: result1.name, invoices: result })
