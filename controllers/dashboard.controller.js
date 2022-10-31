@@ -62,21 +62,33 @@ async function BestProductForStore(req, res) {
             status: false
         })
     })
-
-
 }
-
-// models.invoice_header.findAll({
-//     group: [Sequelize.fn('date_trunc', 'day', Sequelize.col('createdAt'))]
-//   }).then(result => {
-//     console.log(JSON.stringify(result))
-// }).catch(error => {
-//    console.log( JSON.stringify(error))
-// })
-
+//////////////////////////////////////////////////////////////////////
+function countInvoicesDate(req, res) {
+    const storeId = req.body.storeId
+    console.log(storeId)
+    models.invoice_header.findAll({
+        where: { storeId: storeId },
+        attributes: [
+            [Sequelize.fn("MONTH", Sequelize.col("createdAt")), 'Month'],
+            [Sequelize.fn('count', Sequelize.col('id')), 'count'],
+        ],
+        order: [[Sequelize.fn('MONTH', Sequelize.col('createdAt')), 'asc']],
+        group: [Sequelize.fn("MONTH", Sequelize.col("createdAt")), 'Month']
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
 
 module.exports = {
     BestProductForStore,
     CountProductsforStore,
-    countInvoiceInfo
+    countInvoiceInfo,
+    countInvoicesDate
 }
