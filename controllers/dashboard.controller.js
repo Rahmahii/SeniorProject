@@ -38,7 +38,7 @@ function countInvoiceInfo(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
-async function BestProductForStore(req, res) {
+async function bestProductForStore(req, res) {
     const storeId = req.body.storeId
 
     models.invoice_detail.findAll({
@@ -66,7 +66,6 @@ async function BestProductForStore(req, res) {
 //////////////////////////////////////////////////////////////////////
 function countInvoicesDate(req, res) {
     const storeId = req.body.storeId
-    console.log(storeId)
     models.invoice_header.findAll({
         where: { storeId: storeId },
         attributes: [
@@ -85,10 +84,34 @@ function countInvoicesDate(req, res) {
         })
     })
 }
+//////////////////////////////////////////////////////////////////////
+function bestMethod(req, res) {
+    const storeId = req.body.storeId
+    models.invoice_header.findAll({
+        where: { storeId: storeId },
+        attributes: [
+            [Sequelize.fn('count', Sequelize.col('paymentGatwayId')), 'count'],
+        ],
+        group:  'paymentGatwayId',
+        include: [{
+            model: models.payment_gatway,
+            attributes: ['name'],
+        }],
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
 
 module.exports = {
-    BestProductForStore,
+    bestProductForStore,
     CountProductsforStore,
     countInvoiceInfo,
-    countInvoicesDate
+    countInvoicesDate,
+    bestMethod
 }

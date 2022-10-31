@@ -3,12 +3,13 @@ const dashboardController = require('../controllers/dashboard.controller')
 const middleware = require('../middleware/auth')
 const router = express.Router();
 
-router.post("/dashboard", dashboardController.countInvoiceInfo)
-router.post("/dashboard2", dashboardController.BestProductForStore)
+router.post("/dashboard", middleware.checkAuth, dashboardController.countInvoiceInfo)
+router.post("/dashboard2", middleware.checkAuth, dashboardController.bestProductForStore)
 
-router.post("/dashboard3", dashboardController.CountProductsforStore)
+router.post("/dashboard3", middleware.checkAuth, dashboardController.CountProductsforStore)
 
 router.post("/dashboard4", dashboardController.countInvoicesDate)
+router.post("/dashboard5", dashboardController.bestMethod)
 
 module.exports = router
 
