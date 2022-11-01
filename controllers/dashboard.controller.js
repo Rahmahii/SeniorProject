@@ -64,6 +64,32 @@ async function bestProductForStore(req, res) {
     })
 }
 //////////////////////////////////////////////////////////////////////
+function quantityOfProducts(req, res) {
+    const storeId = req.body.storeId
+
+    models.invoice_detail.findAll({
+        attributes: [[Sequelize.fn('sum', Sequelize.col('quantity')), 'Total']],
+        order: [[Sequelize.fn('sum', Sequelize.col('quantity')), 'DESC']],
+        limit: 5,
+        group: ['productId'],
+
+        include: [{
+            model: models.product,
+            where: { storeId },
+            attributes: ['name'],
+        }]
+
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
 function countInvoicesDate(req, res) {
     const storeId = req.body.storeId
     models.invoice_header.findAll({
@@ -92,11 +118,34 @@ function bestMethod(req, res) {
         attributes: [
             [Sequelize.fn('count', Sequelize.col('paymentGatwayId')), 'count'],
         ],
-        group:  'paymentGatwayId',
+        group: 'paymentGatwayId',
         include: [{
             model: models.payment_gatway,
             attributes: ['name'],
         }],
+    }).then(result => {
+        res.status(201).json(result)
+    }).catch(error => {
+        res.status(500).json({
+            message: "something went wrong ",
+            error: error,
+            status: false
+        })
+    })
+}
+//////////////////////////////////////////////////////////////////////
+function bestGender(req, res) {
+    const storeId = req.body.storeId
+    console.log(storeId)
+    models.invoice_header.findAll({
+        where:{storeId:storeId},
+        attributes:[ [Sequelize.literal('COUNT(DISTINCT(userId))'), 'count']],
+        include:[{
+          model:models.user,
+           attributes:['gender'] 
+        }],
+        group: ['gender'],    
+    
     }).then(result => {
         res.status(201).json(result)
     }).catch(error => {
@@ -113,5 +162,7 @@ module.exports = {
     CountProductsforStore,
     countInvoiceInfo,
     countInvoicesDate,
-    bestMethod
+    bestMethod,
+    quantityOfProducts,
+    bestGender
 }

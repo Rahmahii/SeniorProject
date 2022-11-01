@@ -37,7 +37,7 @@ module.exports = {
     {
       invoiceHeaderId: 3,
       productId:3,
-      quantity:1,
+      quantity:4,
       PurchasingPrice:500,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -45,7 +45,7 @@ module.exports = {
     {
       invoiceHeaderId: 3,
       productId:4,
-      quantity:1,
+      quantity:5,
       PurchasingPrice:500,
       createdAt: new Date(),
       updatedAt: new Date()

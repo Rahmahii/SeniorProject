@@ -11,5 +11,9 @@ router.post("/dashboard3", middleware.checkAuth, dashboardController.CountProduc
 router.post("/dashboard4", dashboardController.countInvoicesDate)
 router.post("/dashboard5", dashboardController.bestMethod)
 
+router.post("/dashboard6", dashboardController.quantityOfProducts)
+
+router.post("/dashboard7", dashboardController.bestGender)
+
 module.exports = router
 
