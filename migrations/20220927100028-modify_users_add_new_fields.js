@@ -42,7 +42,7 @@ module.exports = {
     {
       name: "Hadi",
       email: "Hadi@gmail.com",
-      password: "rrr000",
+      password: "$2b$10$PYInEp0ElLBi1u8EkXEvDO4nUOHh41qTIPP6v7U3V5kIXwR./Adca",
       phone: "0533914456",
       gender: 1,
       isActive: 1,
