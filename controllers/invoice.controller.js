@@ -241,11 +241,33 @@ function getInvoice(req, res) {
         })
     })
 }
+function cashIsPaid(req, res) {
+    const id = req.body.id
+
+    const updateduser = {
+        IsPaid:1  
+    }
+
+    models.invoice_header.update(updateduser, { where: { id } }).then(result => {
+        res.status(201).json({
+            message: "invoice is paied successfully",
+            status:true
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error,
+            status:false
+        })
+    })
+
+}
 
 module.exports = {
     create,
     getUserInvoices,
     getStoreInvoices,
     getUserStoreInvoices,
-    getInvoice
+    getInvoice,
+    cashIsPaid
 }

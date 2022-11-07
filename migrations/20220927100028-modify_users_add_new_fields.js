@@ -7,7 +7,7 @@ module.exports = {
       email: "Lameer@gmail.com",
       password: "055555t",
       phone: "0533914456",
-      gender: 1,
+      gender: 2,
       isActive: 1,
       IsApproved: 1,
       roleId: 1,
@@ -15,8 +15,8 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      name: "Rahmah",
-      email: "Rahmah@gmail.com",
+      name: "Majed",
+      email: "Majed@gmail.com",
       password: "055555t",
       phone: "0531864456",
       gender: 1,

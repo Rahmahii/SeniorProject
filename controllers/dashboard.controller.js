@@ -142,9 +142,9 @@ function bestGender(req, res) {
         attributes:[ [Sequelize.literal('COUNT(DISTINCT(userId))'), 'count']],
         include:[{
           model:models.user,
-           attributes:['gender'] 
+           attributes:['gender'] ,
         }],
-        group: ['gender'],    
+        group: ['user.gender'],    
     
     }).then(result => {
         res.status(201).json(result)

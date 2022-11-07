@@ -8,6 +8,7 @@ router.post("/getUserInvoices",middleware.checkAuth , invoiceController.getUserI
 router.post("/getUserStoreInvoices", middleware.checkAuth ,invoiceController.getUserStoreInvoices)
 router.post("/getStoreInvoices",middleware.checkAuth ,invoiceController.getStoreInvoices)
 router.post("/getInvoice",middleware.checkAuth ,invoiceController.getInvoice)
+router.put("/cashIsPaid",invoiceController.cashIsPaid)
 
 
 module.exports = router

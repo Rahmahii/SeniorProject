@@ -113,6 +113,28 @@ function destroy(req, res) {
         })
     })
 }
+function approveUser(req, res) {
+    const email = req.body.email
+
+    const updateduser = {
+        IsApproved:1  
+    }
+
+    models.user.update(updateduser, { where: { email } }).then(result => {
+        res.status(201).json({
+            message: "user approved successfully",
+            user: result,
+            status:true
+        })
+    }).catch(error => {
+        res.status(400).json({
+            message: "something went wrong ",
+            error: error,
+            status:false
+        })
+    })
+
+}
 
 module.exports = {
     getUserByPhone,
@@ -121,6 +143,7 @@ module.exports = {
     update,
     destroy,
     getUserByRole,
-    getUserByStore
+    getUserByStore,
+    approveUser
 }
 

@@ -11,6 +11,7 @@ router.post("/getUserByPhone",userController.getUserByPhone)
 router.post("/getUserByRole",userController.getUserByRole)
 router.post("/getUserByStore",middleware.checkAuth,userController.getUserByStore)
 router.put("/updateUser",middleware.checkAuth,userController.update)
+router.put("/approveUser",userController.approveUser)
 
 router.get("/:id",userController.show)//params
 router.get("/",userController.index)
